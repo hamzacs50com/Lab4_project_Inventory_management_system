@@ -3,22 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package hello;
+package inventory.mohamed;
 
 /**
  *
  * @author Dell
  */
-public class Hello {
+public class InventoryMohamed {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("helooooooooo"); 
-        System.out.println("hello");       
-
     }
     
 }
