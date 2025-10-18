@@ -7,6 +7,7 @@ package inventory.mohamed;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -40,37 +41,83 @@ public class EmployeeUserDatabase {
                 records.add(user);
             }
         }
+        scan.close();
+
 
     }
     
     public EmployeeUser createRecordFrom(String line)
     {
-        String[] parts = line.split(",");
-        EmployeeUser user=null;
-            if (parts.length == 5)
-            {
-                 user = new EmployeeUser( parts[0], parts[1], parts[2], parts[3], parts[4]);
+            String[] parts = line.split(",");
+            EmployeeUser user =null;
+            if (parts.length == 5) {
+                user = new EmployeeUser( parts[0], parts[1], parts[2], parts[3], parts[4]);
+                //records.add(user);
             }
-            else return null;
-            
-            for (int i = 0; i < records.size(); i++)     // لسه هنظبطها عشان اتلخبط بين دالتين سيبها
-            {
-                if(AreEqual(user,records.get(i))){
-                    return user;
-                }
-            }
-            return null;
+        return user;
+    }
+    
+    public ArrayList<EmployeeUser> returnAllRecords()
+    {
+        return records;
+    }
+    
+    public boolean contains(String key )   // emp. ID
+    {
+        ArrayList <EmployeeUser> search = records;
+        
+        for(int i=0;i<search.size();i++)
+        {
+            if(search.get(i).getEmployeeId().equals(key))
+                return true;
+        }
+        return false;
+    }
+    
+    public EmployeeUser getRecord(String key)
+    {
+        for(int i=0;i<records.size();i++)
+        {
+            if(records.get(i).getEmployeeId().equals(key))
+                return records.get(i);
+        }
+        return null ;
+        
+    }
+    
+    public void insertRecord(EmployeeUser record)
+    {
+        if(!contains(record.getEmployeeId()))
+           records.add(record);
+    }
+    
+    public void deleteRecord(String key)
+    {
+        if( getRecord(key)==null) return;
+        if(contains(key))
+       records.remove(getRecord(key));
+    }
+    
+    public void saveToFile() throws FileNotFoundException
+    {
+        PrintWriter writer = new PrintWriter(filename);
+        
+        for(int i=0;i<records.size();i++)
+        {
+            EmployeeUser  user =records.get(i);
+            String line = user.getEmployeeId() + "," +
+                          user.getName() + "," +
+                          user.getEmail() + "," +
+                          user.getPhoneNumber() + "," +
+                          user.getAddress();
+            writer.println(line);
+
+
+        }
+        writer.close();
 
     }
     
-    public boolean AreEqual(EmployeeUser a, EmployeeUser b)
-    {
-        return a.getAddress().equals(b.getAddress()) &&
-                a.getEmail().equals(b.getEmail()) &&
-                a.getEmployeeId().equals(b.getEmployeeId()) &&
-                a.getName().equals(b.getName())&&
-                a.getPhoneNumber().equals(b.getPhoneNumber());
-    }
-            
+    
     
 }

@@ -28,6 +28,26 @@ public class EmployeeUser {
     {
         return employeeId +","+ name +","+ email +","+ address+"," +phoneNumber;
     }
+
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
     
     public String getSearchKey()
     {
