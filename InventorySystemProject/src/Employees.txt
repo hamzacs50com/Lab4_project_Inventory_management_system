@@ -1,0 +1,3 @@
+E101,John Smith,john.s@example.com,123 Main St Alexandria,555-0101
+E103,Peter Jones,peter.j@example.com,789 Pine Ln Alexandria,555-0103
+E104,Alice Wonder,alice.w@example.com,404 Rabbit Hole,555-0104
