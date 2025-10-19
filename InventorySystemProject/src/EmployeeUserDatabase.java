@@ -34,8 +34,6 @@ public class EmployeeUserDatabase {
 
     public EmployeeUser createRecordFrom(String line) {
         String[] parts = line.split(",");
-        // The check for parts.length is good, but should be handled carefully.
-        // Assuming valid data format as per lab spec.
         return new EmployeeUser(parts[0], parts[1], parts[2], parts[3], parts[4]);
     }
 
