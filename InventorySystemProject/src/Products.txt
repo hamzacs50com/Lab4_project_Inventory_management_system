@@ -1,0 +1,4 @@
+P001,Laptop,Dell,TechDistributors,15,1200.5
+P002,Mouse,Logitech,GadgetWarehouse,49,25.0
+P003,Keyboard,Corsair,PCPartsDirect,30,75.99
+P004,Monitor,Samsung,ElecSupplies,23,350.0
