@@ -23,6 +23,10 @@ public class EmployeeUser {
         this.phoneNumber=phoneNumber;
         
     }
+
+    EmployeeUser() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public String lineRepresentation()
     {
