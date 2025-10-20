@@ -1,4 +1,6 @@
-public class EmployeeUser {
+package Refactored.records;
+
+public class EmployeeUser implements Record{
     private String employeeId;
     private String name;
     private String email;
@@ -13,29 +15,20 @@ public class EmployeeUser {
         this.phoneNumber = phoneNumber;
     }
 
+    @Override
+    public String getSearchKey(){
+        return employeeId;
+    }
 
+    @Override
     public String lineRepresentation() {
         return employeeId + "," + name + "," + email + "," + address + "," + phoneNumber;
     }
 
-    public String getSearchKey() {
-        return employeeId;
-    }
-
     // Getters
-    public String getEmployeeId() {
-        return employeeId;
-    }
-    public String getName() {
-        return name;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public String getAddress() {
-        return address;
-    }
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
+    public String getEmployeeId() { return employeeId; }
+    public String getName() { return name; }
+    public String getEmail() { return email; }
+    public String getAddress() { return address; }
+    public String getPhoneNumber() { return phoneNumber; }
 }

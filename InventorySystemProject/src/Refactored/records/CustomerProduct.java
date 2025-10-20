@@ -1,11 +1,13 @@
+package Refactored.records;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-class CustomerProduct {
+public class CustomerProduct implements Record{
     private String customerSSN;
     private String productID;
-    private boolean paid;
     private LocalDate purchaseDate;
+    private boolean paid;
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     public CustomerProduct(String customerSSN, String productID, LocalDate purchaseDate) {
@@ -15,31 +17,20 @@ class CustomerProduct {
         this.paid = false;
     }
 
-    public String getCustomerSSN() {
-        return customerSSN;
+    @Override
+    public String getSearchKey() {
+        return customerSSN + "," + productID + "," + purchaseDate.format(DATE_FORMATTER);
     }
 
-    public String getProductID() {
-        return productID;
-    }
-
-    public LocalDate getPurchaseDate() {
-        return purchaseDate;
-    }
-
+    @Override
     public String lineRepresentation() {
         return customerSSN + "," + productID + "," + purchaseDate.format(DATE_FORMATTER) + "," + paid;
     }
 
-    public boolean isPaid() {
-        return paid;
-    }
-
-    public void setPaid(boolean paid) {
-        this.paid = paid;
-    }
-
-    public String getSearchKey() {
-        return customerSSN + "," + productID + "," + purchaseDate.format(DATE_FORMATTER);
-    }
+    // Getters and Setters
+    public String getCustomerSSN() { return customerSSN; }
+    public String getProductID() { return productID; }
+    public LocalDate getPurchaseDate() { return purchaseDate; }
+    public boolean isPaid() { return paid; }
+    public void setPaid(boolean paid) { this.paid = paid; }
 }
