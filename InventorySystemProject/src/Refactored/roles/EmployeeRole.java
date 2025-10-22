@@ -27,6 +27,11 @@ public class EmployeeRole {
         productsDatabase.insertRecord(newProduct);
     }
 
+    public void addProduct(String productID, String productName, String manufacturerName, String supplierName, int quantity) {
+        Product newProduct = new Product(productID, productName, manufacturerName, supplierName, quantity, 0);
+        productsDatabase.insertRecord(newProduct);
+    }
+
     public Product[] getListOfProducts() {
         ArrayList<Product> records = productsDatabase.returnAllRecords();
         return records.toArray(new Product[0]);
@@ -65,12 +70,26 @@ public class EmployeeRole {
         return product.getPrice();
     }
 
-    public boolean applyPayment(String customerSSN, String productID, LocalDate purchaseDate) {
-        String key = customerSSN + "," + productID + "," + purchaseDate.format(DATE_FORMATTER);
-        CustomerProduct purchase = customerProductDatabase.getRecord(key);
-        if (purchase != null && !purchase.isPaid()){
-            purchase.setPaid(true);
-            return true;
+    public boolean applyPayment(String customerSSN, LocalDate purchaseDate) {
+
+        // The key for CustomerProductDatabase requires SSN, ProductID, and Date[cite: 181, 182].
+        // Since only SSN and Date are provided, we must iterate through the records list.
+        ArrayList<CustomerProduct> records = customerProductDatabase.returnAllRecords(); // Get all records [cite: 194]
+
+        for (CustomerProduct purchase : records) {
+
+            // Step 1: Check if SSN and Date match
+            if (purchase.getCustomerSSN().equals(customerSSN) &&
+                    purchase.getPurchaseDate().isEqual(purchaseDate)) {
+                if (!purchase.isPaid()) {
+                    purchase.setPaid(true);
+                    String key = purchase.getSearchKey();
+                    customerProductDatabase.deleteRecord(key);
+                    customerProductDatabase.insertRecord(purchase);
+                    return true;
+                }
+                return false;
+            }
         }
         return false;
     }
