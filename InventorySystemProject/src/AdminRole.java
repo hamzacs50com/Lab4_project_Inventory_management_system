@@ -5,7 +5,6 @@ public class AdminRole {
     private EmployeeUserDatabase database;
 
     public AdminRole() {
-        // CORRECTED: Pass the required filename to the constructor.
         database = new EmployeeUserDatabase("Employees.txt");
     }
 
@@ -24,8 +23,6 @@ public class AdminRole {
     }
 
     public void logout() {
-        // The original "throws FileNotFoundException" is often better handled
-        // within the saveToFile method using a try-catch block.
         database.saveToFile();
     }
 }
