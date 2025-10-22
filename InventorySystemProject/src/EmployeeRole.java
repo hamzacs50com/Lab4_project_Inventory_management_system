@@ -19,6 +19,10 @@ public class EmployeeRole {
         productsDatabase.insertRecord(newProduct);
     }
 
+    public void addProduct(String productID, String productName, String manufacturerName, String supplierName, int quantity) {
+        addProduct(productID, productName, manufacturerName, supplierName, quantity, 0);
+    }
+
     public Product[] getListOfProducts() {
         ArrayList<Product> records = productsDatabase.returnAllRecords();
         return records.toArray(new Product[0]);
@@ -65,16 +69,25 @@ public class EmployeeRole {
         return product.getPrice(); // Return the price for the refund
     }
 
-    public boolean applyPayment(String customerSSN, String productID, LocalDate purchaseDate) {
-         String key = customerSSN + "," + productID + "," + purchaseDate.format(DATE_FORMATTER);
-         CustomerProduct purchase = customerProductDatabase.getRecord(key);
+    public boolean applyPayment(String customerSSN, LocalDate purchaseDate) {
+        ArrayList<CustomerProduct> records = customerProductDatabase.returnAllRecords(); 
 
-         // Check if the purchase exists and is not already paid
-         if (purchase != null && !purchase.isPaid()){
-             purchase.setPaid(true); // Mark as paid
-             return true;
-         }
-        return false; // Payment application failed
+        for (CustomerProduct purchase : records) {
+            if (purchase.getCustomerSSN().equals(customerSSN) && 
+                purchase.getPurchaseDate().isEqual(purchaseDate)) {
+                if (!purchase.isPaid()){
+                    purchase.setPaid(true);
+                    String key = purchase.getSearchKey(); 
+                    customerProductDatabase.deleteRecord(key); 
+                    customerProductDatabase.insertRecord(purchase); 
+                    return true;
+                }
+                return false; 
+            }
+        }
+        
+        // Record not found. Payment application failed.
+        return false; 
     }
 
     public void logout() {
